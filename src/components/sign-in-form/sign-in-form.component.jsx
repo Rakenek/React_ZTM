@@ -3,10 +3,7 @@ import FormInput from "../form-input/form-input.component";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import { signInAuthUserWithEmailAndPassword } from "../../utlis/firebase/firebase.utils";
 import "./sign-in-form.styles.scss";
-import {
-  createUserDocumentFromAuth,
-  signInWithGooglePopup,
-} from "../../utlis/firebase/firebase.utils";
+import { signInWithGooglePopup } from "../../utlis/firebase/firebase.utils";
 
 const defaultFormFields = {
   email: "",
@@ -25,6 +22,7 @@ const SignInForm = () => {
         email,
         password
       );
+      console.log(user);
       setFormFields(defaultFormFields);
     } catch (error) {
       console.error(error);
