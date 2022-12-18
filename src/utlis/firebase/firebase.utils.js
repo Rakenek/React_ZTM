@@ -1,4 +1,4 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp } from 'firebase/app';
 import {
   getAuth,
   signInWithRedirect,
@@ -8,7 +8,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-} from "firebase/auth";
+} from 'firebase/auth';
 import {
   getFirestore,
   doc,
@@ -18,18 +18,18 @@ import {
   writeBatch,
   query,
   getDocs,
-} from "firebase/firestore";
+} from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBrWQ0ZpjH-gqWZXvdj27W4Q4yUWrcc_4w",
-  authDomain: "crwn-db-3d0f3.firebaseapp.com",
-  projectId: "crwn-db-3d0f3",
-  storageBucket: "crwn-db-3d0f3.appspot.com",
-  messagingSenderId: "391938676366",
-  appId: "1:391938676366:web:ea58d1565669831dc0dbdf",
+  apiKey: 'AIzaSyBrWQ0ZpjH-gqWZXvdj27W4Q4yUWrcc_4w',
+  authDomain: 'crwn-db-3d0f3.firebaseapp.com',
+  projectId: 'crwn-db-3d0f3',
+  storageBucket: 'crwn-db-3d0f3.appspot.com',
+  messagingSenderId: '391938676366',
+  appId: '1:391938676366:web:ea58d1565669831dc0dbdf',
 };
 
 // Initialize Firebase
@@ -38,7 +38,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 console.log(firebaseApp);
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
-  prompt: "select_account",
+  prompt: 'select_account',
 });
 export const auth = getAuth();
 
@@ -62,11 +62,11 @@ export const addCollectionAndDocuments = async (
   });
 
   await batch.commit();
-  console.log("done");
+  console.log('done');
 };
 
 export const getCategoriesAndDocuments = async () => {
-  const collectionRef = collection(db, "categories");
+  const collectionRef = collection(db, 'categories');
   const q = query(collectionRef);
 
   const querySnapshot = await getDocs(q);
@@ -86,7 +86,7 @@ export const createUserDocumentFromAuth = async (
 ) => {
   console.log(userAuth);
   if (!userAuth) return;
-  const userDocRef = doc(db, "users", userAuth.uid);
+  const userDocRef = doc(db, 'users', userAuth.uid);
   //console.log(userDocRef);
 
   const userSnapshot = await getDoc(userDocRef);
@@ -103,7 +103,7 @@ export const createUserDocumentFromAuth = async (
         ...additionalInfo,
       });
     } catch (error) {
-      console.error("error creating the user", error.message);
+      console.error('error creating the user', error.message);
     }
   }
   return userDocRef;
