@@ -34,8 +34,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 
-const firebaseApp = initializeApp(firebaseConfig);
-console.log(firebaseApp);
+initializeApp(firebaseConfig);
+
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
   prompt: 'select_account',
@@ -86,7 +86,7 @@ export const createUserDocumentFromAuth = async (
   userAuth,
   additionalInfo = {}
 ) => {
-  console.log(userAuth);
+  //console.log(userAuth);
   if (!userAuth) return;
   const userDocRef = doc(db, 'users', userAuth.uid);
   //console.log(userDocRef);
