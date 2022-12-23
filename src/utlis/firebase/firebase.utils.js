@@ -108,6 +108,7 @@ export const createUserDocumentFromAuth = async (
       console.error('error creating the user', error.message);
     }
   }
+  console.log(userDocRef);
   return userDocRef;
 };
 

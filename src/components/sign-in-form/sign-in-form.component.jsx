@@ -1,16 +1,20 @@
-import { useState } from "react";
-import FormInput from "../form-input/form-input.component";
-import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
-import { signInAuthUserWithEmailAndPassword } from "../../utlis/firebase/firebase.utils";
-import "./sign-in-form.styles.scss";
-import { signInWithGooglePopup } from "../../utlis/firebase/firebase.utils";
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import FormInput from '../form-input/form-input.component';
+import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
+
+import {
+  googleSignInStart,
+  emailSignInStart,
+} from '../../store/user/user.actions';
 
 const defaultFormFields = {
-  email: "",
-  password: "",
+  email: '',
+  password: '',
 };
 
 const SignInForm = () => {
+  const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
@@ -18,20 +22,16 @@ const SignInForm = () => {
     event.preventDefault();
 
     try {
-      const { user } = await signInAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
-      console.log(user);
+      dispatch(emailSignInStart(email, password));
       setFormFields(defaultFormFields);
     } catch (error) {
       console.error(error);
       switch (error.code) {
-        case "auth/wrong-password":
-          alert("incorrect password or email");
+        case 'auth/wrong-password':
+          alert('incorrect password or email');
           break;
-        case "auth/user-not-found":
-          alert("no user associated with this email");
+        case 'auth/user-not-found':
+          alert('no user associated with this email');
           break;
         default:
           console.error(error);
@@ -40,7 +40,7 @@ const SignInForm = () => {
   };
 
   const signInWithGoogle = async () => {
-    await signInWithGooglePopup();
+    dispatch(googleSignInStart());
   };
 
   const onInputChangeHandler = (event) => {
@@ -56,9 +56,9 @@ const SignInForm = () => {
         <FormInput
           label="Email"
           inputOption={{
-            id: "email1",
-            name: "email",
-            type: "email",
+            id: 'email1',
+            name: 'email',
+            type: 'email',
             required: true,
             onChange: onInputChangeHandler,
             value: email,
@@ -68,9 +68,9 @@ const SignInForm = () => {
         <FormInput
           label="Password"
           inputOption={{
-            id: "password1",
-            name: "password",
-            type: "password",
+            id: 'password1',
+            name: 'password',
+            type: 'password',
             required: true,
             onChange: onInputChangeHandler,
             value: password,
