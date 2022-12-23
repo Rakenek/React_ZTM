@@ -1,39 +1,33 @@
-import { useState } from "react";
-import FormInput from "../form-input/form-input.component";
-import Button from "../button/button.component";
-import {
-  createAuthUserWithEmailAndPassword,
-  createUserDocumentFromAuth,
-} from "../../utlis/firebase/firebase.utils";
+import { useState } from 'react';
+import FormInput from '../form-input/form-input.component';
+import Button from '../button/button.component';
+import { useDispatch } from 'react-redux';
+import { signUpStart } from '../../store/user/user.actions';
 
-import "./sign-up-form.styles.scss";
+import './sign-up-form.styles.scss';
 
 const defaultFormFields = {
-  displayName: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
+  displayName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
 };
 
 const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
+  const dispatch = useDispatch();
 
   //console.log(formFields);
 
   const submitHandler = async (event) => {
     event.preventDefault();
     if (password !== confirmPassword) {
-      alert("password do not match");
+      alert('password do not match');
       return;
     }
     try {
-      const { user } = await createAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
-      const userDoc = await createUserDocumentFromAuth(user, { displayName });
-      console.log(userDoc);
+      dispatch(signUpStart(email, password, displayName));
       setFormFields(defaultFormFields);
     } catch (error) {
       console.error(error);
@@ -53,9 +47,9 @@ const SignUpForm = () => {
         <FormInput
           label="Dispaly Name"
           inputOption={{
-            id: "displayName",
-            name: "displayName",
-            type: "text",
+            id: 'displayName',
+            name: 'displayName',
+            type: 'text',
             required: true,
             onChange: onInputChangeHandler,
             value: displayName,
@@ -65,9 +59,9 @@ const SignUpForm = () => {
         <FormInput
           label="Email"
           inputOption={{
-            id: "email",
-            name: "email",
-            type: "email",
+            id: 'email',
+            name: 'email',
+            type: 'email',
             required: true,
             onChange: onInputChangeHandler,
             value: email,
@@ -77,9 +71,9 @@ const SignUpForm = () => {
         <FormInput
           label="Password"
           inputOption={{
-            id: "password",
-            name: "password",
-            type: "password",
+            id: 'password',
+            name: 'password',
+            type: 'password',
             required: true,
             onChange: onInputChangeHandler,
             value: password,
@@ -88,9 +82,9 @@ const SignUpForm = () => {
         <FormInput
           label="Confirm Password"
           inputOption={{
-            id: "confirmPassword",
-            name: "confirmPassword",
-            type: "password",
+            id: 'confirmPassword',
+            name: 'confirmPassword',
+            type: 'password',
             required: true,
             onChange: onInputChangeHandler,
             value: confirmPassword,
