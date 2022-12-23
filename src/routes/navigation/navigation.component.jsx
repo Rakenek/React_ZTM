@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { Fragment } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { ReactComponent as CrownLogo } from '../../assets/crown.svg';
 import {
   NavigationContainer,
@@ -10,13 +10,14 @@ import {
 } from './navigation.styles';
 import CartIcon from '../../components/cart-icon/cart-icon.component';
 
-import { signOutUser } from '../../utlis/firebase/firebase.utils';
+import { signOutStart } from '../../store/user/user.actions';
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component';
 
 import { selectCurrentUser } from '../../store/user/user.selector';
 import { selectIsCartOpen } from '../../store/cart/cart.selector';
 
 const Navigation = () => {
+  const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
 
   const isCartOpen = useSelector(selectIsCartOpen);
@@ -34,7 +35,12 @@ const Navigation = () => {
             SHOP
           </NavLink>
           {currentUser ? (
-            <NavLink as="span" onClick={signOutUser}>
+            <NavLink
+              as="span"
+              onClick={() => {
+                dispatch(signOutStart());
+              }}
+            >
               SIGN OUT
             </NavLink>
           ) : (
